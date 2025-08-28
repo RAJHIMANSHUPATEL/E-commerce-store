@@ -39,6 +39,8 @@ export const services = [
   },
 ];
 
-export const products_url = 'https://www.course-api.com/react-store-products';
+// export const products_url = 'https://www.course-api.com/react-store-products';
+// export const products_url = 'http://localhost:3000/api/products';
+export const products_url = 'https://comfy-sloth-backend-kappa.vercel.app/products';
 
 export const single_product_url = `https://www.course-api.com/react-store-single-product?id=`;
