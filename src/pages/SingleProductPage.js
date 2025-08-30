@@ -49,10 +49,12 @@ const SingleProductPage = () => {
     stock,
     stars,
     reviews,
-    id: sku,
+    _id: sku,
     company,
     images,
-  } = product;
+  } = product.data;
+
+  console.log(product.data)
   return (
     <Wrapper>
       <PageHero title={name} product />
