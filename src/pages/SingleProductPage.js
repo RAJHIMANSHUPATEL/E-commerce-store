@@ -64,7 +64,7 @@ const SingleProductPage = () => {
     _id: sku,
     company,
     images,
-  } = product.data;
+  } = product;
 
   return (
     <Wrapper>
