@@ -50,7 +50,7 @@ const SingleProductPage = () => {
   }
 
   // Handle case when product or product.data is missing
-  if (!product || !product.data) {
+  if (!product) {
     return <Loading />;
   }
 
