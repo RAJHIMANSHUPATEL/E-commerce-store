@@ -52,9 +52,8 @@ const SingleProductPage = () => {
     _id: sku,
     company,
     images,
-  } = product.data;
+  } = product;
 
-  console.log(product.data)
   return (
     <Wrapper>
       <PageHero title={name} product />
