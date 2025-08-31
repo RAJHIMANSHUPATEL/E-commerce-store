@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
 import { single_product_url as url } from '../utils/constants';
 import { formatPrice } from '../utils/helpers';
@@ -12,7 +12,7 @@ import {
   PageHero,
 } from '../components';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+
 const SingleProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,10 +23,13 @@ const SingleProductPage = () => {
     fetchSingleProduct,
   } = useProductsContext();
 
+  // Fetch product when id changes
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
     // eslint-disable-next-line
   }, [id]);
+
+  // Redirect to home if error occurs
   useEffect(() => {
     if (error) {
       setTimeout(() => {
@@ -34,12 +37,21 @@ const SingleProductPage = () => {
       }, 3000);
     }
     // eslint-disable-next-line
-  }, [error]);
+  }, [error, navigate]);
+
+  // Handle loading
   if (loading) {
     return <Loading />;
   }
+
+  // Handle error
   if (error) {
     return <Error />;
+  }
+
+  // Handle case when product or product.data is missing
+  if (!product || !product.data) {
+    return <Loading />;
   }
 
   const {
@@ -54,30 +66,29 @@ const SingleProductPage = () => {
     images,
   } = product.data;
 
-  console.log(product.data)
   return (
     <Wrapper>
       <PageHero title={name} product />
-      <div className='section section-center page'>
-        <Link to='/products' className='btn'>
+      <div className="section section-center page">
+        <Link to="/products" className="btn">
           back to products
         </Link>
-        <div className='product-center'>
+        <div className="product-center">
           <ProductImages images={images} />
-          <section className='content'>
+          <section className="content">
             <h2>{name}</h2>
             <Stars stars={stars} reviews={reviews} />
-            <h5 className='price'>{formatPrice(price)}</h5>
-            <p className='desc'>{description}</p>
-            <p className='info'>
+            <h5 className="price">{formatPrice(price)}</h5>
+            <p className="desc">{description}</p>
+            <p className="info">
               <span>Available : </span>
-              {stock > 0 ? 'In stock' : 'out of stock'}
+              {stock > 0 ? 'In stock' : 'Out of stock'}
             </p>
-            <p className='info'>
+            <p className="info">
               <span>SKU :</span>
               {sku}
             </p>
-            <p className='info'>
+            <p className="info">
               <span>Brand :</span>
               {company}
             </p>
@@ -108,11 +119,14 @@ const Wrapper = styled.main`
     width: 300px;
     display: grid;
     grid-template-columns: 125px 1fr;
-    span {
-      font-weight: 700;
-    }
   }
-
+  .info span {
+    font-weight: 700;
+  }
+  hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
   @media (min-width: 992px) {
     .product-center {
       grid-template-columns: 1fr 1fr;
