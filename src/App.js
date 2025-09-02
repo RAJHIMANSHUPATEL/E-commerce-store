@@ -12,6 +12,8 @@ import {
   PrivateRoute,
   AuthWrapper,
 } from './pages';
+import Login from './components/Login';
+import Register from './components/Register';
 function App() {
   return (
     <AuthWrapper>
@@ -20,6 +22,8 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path='/' exact element={<Home />} />
+          <Route path='/register' exact element={<Register />} />
+          <Route path='/login' exact element={<Login />} />
           <Route path='about' element={<About />} />
           <Route path='cart' element={<Cart />} />
           <Route path='products' element={<Products />} />
